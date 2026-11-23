@@ -1,0 +1,28 @@
+# Build output
+target/
+build/
+out/
+
+# Maven wrapper jar (downloaded on first run)
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+.classpath
+.project
+.settings/
+
+# Environment and secrets
+.env
+*.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
