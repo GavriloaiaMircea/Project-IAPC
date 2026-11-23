@@ -1,0 +1,47 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ingest-static
+  # Local runs read the shared .env from the project root (never committed).
+  config:
+    import: optional:file:../.env[.properties]
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${POSTGRES_DB:edupulse}
+    username: ${POSTGRES_USER:edupulse}
+    password: ${POSTGRES_PASSWORD:}
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  ai:
+    model:
+      chat: none
+      embedding: ollama
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      init:
+        pull-model-strategy: when_missing
+      embedding:
+        options:
+          model: ${EMBEDDING_MODEL:nomic-embed-text}
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        table-name: vector_store
+        dimensions: ${EMBEDDING_DIMENSIONS:768}
+        index-type: hnsw
+        distance-type: cosine_distance
+
+app:
+  ingest:
+    chunk-size: ${APP_CHUNK_SIZE:1000}
+    chunk-overlap: ${APP_CHUNK_OVERLAP:150}
+    resources-dir: ${APP_RESOURCES_DIR:../resources}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

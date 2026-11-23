@@ -18,6 +18,7 @@
     <description>IAPC project - Epic 1 RAG, Story 1: static ingestion</description>
 
     <modules>
+        <module>ingest-static</module>
     </modules>
 
     <properties>
